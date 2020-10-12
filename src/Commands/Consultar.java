@@ -47,7 +47,6 @@ public class Consultar {
             while (rs.next()){
                 int id = rs.getInt("id");
                 String nome = rs.getString("nome");
-
                 System.out.println("Id " + id + " -> " + nome);
             }
         }catch (SQLException e){
