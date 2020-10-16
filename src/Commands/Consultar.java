@@ -5,6 +5,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Scanner;
 
 public class Consultar {
 
@@ -16,7 +17,6 @@ public class Consultar {
             String query = "select * from table_users";
 
             Statement stmt = conn.createStatement();
-
             ResultSet rs = stmt.executeQuery(query);
 
             while (rs.next()){

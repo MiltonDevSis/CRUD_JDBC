@@ -24,7 +24,6 @@ public class Inserir {
             stmt.setString(2, email);
             stmt.setString(3, endereco);
             stmt.setString(4, dataNascimento);
-
             stmt.executeUpdate();
 
         }catch (SQLException e){

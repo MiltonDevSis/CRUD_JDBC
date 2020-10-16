@@ -18,9 +18,7 @@ public class Deletar {
             String query = "delete from table_users where id = ?";
 
             stmt = conn.prepareStatement(query);
-
             stmt.setInt(1, id);
-
             stmt.executeUpdate();
 
         }catch (SQLException e){

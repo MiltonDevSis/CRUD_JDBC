@@ -4,18 +4,26 @@ import Commands.Atualizar;
 import Commands.Consultar;
 import Commands.Deletar;
 import Commands.Inserir;
+import entities.User;
+
+import javax.jws.soap.SOAPBinding;
+import javax.sound.midi.Soundbank;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 import java.util.Scanner;
 
 public class Program {
 
-    public static void main(String[] args){
+    public static void main(String[] args) throws SQLException {
+
 
         Locale.setDefault(Locale.US);
         Scanner entrada = new Scanner(System.in);
 
         int escolha = 0;
-        while (escolha != 5){
+        while (escolha != 6){
 
             StringBuilder sb = new StringBuilder();
             System.out.println("Meu CRUD JDBC");
@@ -30,7 +38,9 @@ public class Program {
             sb.append("\n");
             sb.append("4 - Consultar");
             sb.append("\n");
-            sb.append("5 - Fechar");
+            sb.append("5 - Nova funcionalidade");
+            sb.append("\n");
+            sb.append("6 - Fechar");
             System.out.println(sb);
             escolha = entrada.nextInt();
             entrada.nextLine();
@@ -55,7 +65,7 @@ public class Program {
                     System.out.println("-----  Atualizar  -----");
                     System.out.println();
                     Consultar.consultarUsers();
-                    System.out.println("Em qual usuário deseja fazer uma alteração? digite o ID");
+                    System.out.println("Digite um ID");
                     int idUser = entrada.nextInt();
                     entrada.nextLine();
                     System.out.println("Novo nome:");
@@ -87,6 +97,26 @@ public class Program {
                     escolha = 0;
                     break;
                 case 5:
+                    List<User> users = Atualizar.pesquisaNome();
+
+                    if (users.size() > 0){
+                        int y = users.size();
+                        System.out.println("Foram encontrados " + y + " registros");
+                        for(User user: users){
+                            System.out.println("ID: " + user.getId());
+                            System.out.println("Nome; " + user.getNome());
+                            System.out.println("Email: " + user.getEmail());
+                            System.out.println("Endereco: " + user.getEndereco());
+                            System.out.println("Data Nascimento: " + user.getDataNascimento());
+                            System.out.println("-----------------------------");
+                        }
+                    }else{
+                        System.out.println("Nenhum registro encontrado");
+                    }
+
+                    escolha = 0;
+                    break;
+                case 6:
                     System.out.println("SAINDO....");
                     break;
                 default:

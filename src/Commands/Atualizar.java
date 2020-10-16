@@ -1,9 +1,12 @@
 package Commands;
 
 import dbConnection.FabricaConexao;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import entities.User;
+
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
 
 public class Atualizar {
 
@@ -25,7 +28,7 @@ public class Atualizar {
             stmt.setString(4, dataNascimento);
             stmt.setInt(5, id);
 
-           int linhasAfetadas = stmt.executeUpdate();
+            int linhasAfetadas = stmt.executeUpdate();
 
             System.out.println("Linhas afetadas: " + linhasAfetadas);
 
@@ -35,5 +38,37 @@ public class Atualizar {
             FabricaConexao.closeStatement(stmt);
             FabricaConexao.closeConection();
         }
+    }
+
+    public static List<User> pesquisaNome() throws SQLException {
+
+        Scanner entrada = new Scanner(System.in);
+        Connection conn = FabricaConexao.getConexao();
+
+        List<User> users = new ArrayList<>();
+
+        System.out.println("Informe um nome!");
+        String nome = entrada.nextLine();
+
+        String query = "SELECT * FROM table_users WHERE nome=?";
+        PreparedStatement stmt = conn.prepareStatement(query);
+
+        stmt.setString(1, nome);
+
+        ResultSet rs = stmt.executeQuery();
+
+        while (rs.next()){
+            User user = new User();
+            user.setId(rs.getInt("id"));
+            user.setNome(rs.getString("nome"));
+            user.setEmail(rs.getString("email"));
+            user.setEndereco(rs.getString("endereco"));
+            user.setDataNascimento(rs.getString("dataNascimento"));
+            users.add(user);
+        }
+        stmt.close();
+        rs.close();
+        conn.close();
+        return users;
     }
 }
